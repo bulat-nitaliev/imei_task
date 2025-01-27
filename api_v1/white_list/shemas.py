@@ -4,6 +4,7 @@ from datetime import datetime
 
 class WhiteListBase(BaseModel):
     name: str
+    tg_id:str
     created_at: datetime
 
 

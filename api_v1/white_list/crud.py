@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from core.models import WhiteList
-from sqlalchemy import select, Result
+from sqlalchemy import select, Result, delete
 from fastapi import HTTPException, status
 
 
@@ -30,4 +30,10 @@ async def get_white_list(session:AsyncSession)->list[WhiteList]:
     result:Result = await session.execute(stat)
     white_list = result.scalars().all()
     return list(white_list)
+
+
+async def delete_white_list(tg_id:str, session:AsyncSession)->None:
+    stmt = delete(WhiteList).where(WhiteList.tg_id==tg_id)
+    await session.execute(stmt)
+    await session.commit()
 

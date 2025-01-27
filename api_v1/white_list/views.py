@@ -21,3 +21,8 @@ async def create_product(
         session=session,
         white_list=white_list
         )
+
+
+@router.delete('/{tg_id}')
+async def delete_by_tg_id(tg_id:str, session:AsyncSession = Depends(db_helper.session_dependency)):
+    await crud.delete_white_list(tg_id=tg_id, session=session)
