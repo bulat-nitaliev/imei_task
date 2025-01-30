@@ -2,6 +2,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core.models import WhiteList
 from sqlalchemy import select, Result, delete
 from fastapi import HTTPException, status
+from core.models.user import User
+from core.schemas.user import UserShema
+from sqlalchemy import select, Result
 
 
 
@@ -29,7 +32,22 @@ async def get_white_list(session:AsyncSession)->list[WhiteList]:
     stat = select(WhiteList).order_by(WhiteList.id)
     result:Result = await session.execute(stat)
     white_list = result.scalars().all()
+    
     return list(white_list)
+
+
+async def get_list_users(session:AsyncSession)->list[UserShema]:
+    stat = select(User).order_by(User.id)
+    result:Result = await session.execute(stat)
+    user_list = result.scalars().all()
+    
+    return list(user_list)
+
+
+
+
+
+
 
 
 async def delete_white_list(tg_id:str, session:AsyncSession)->None:
