@@ -4,12 +4,14 @@ from contextlib import asynccontextmanager
 from api_v1 import router as router_v1
 from core.config import settings
 from core.models import db_helper
+from actions.create_superuser import create_superuser
 
 
 @asynccontextmanager
 async def lifespan(app:FastAPI): 
     # async with db_helper.engine.begin() as conn:
         # await conn.run_sync(Base.metadata.create_all)
+    # await create_superuser()
     yield
     await db_helper.dispose()
 
